@@ -5,4 +5,4 @@ Features:
 - the player's best scores will be stored in the device
 - the general best scores of all players will be available online
 - design customization (the user will be able to change the game's theme color as well as the card pictures)
-- sounds (may be disabled by the user)
+- sounds (can be disabled by the user)
