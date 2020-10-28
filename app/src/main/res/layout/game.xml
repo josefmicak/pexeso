@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#19F7FF">
+
+    <ImageView
+        android:id="@+id/card01"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="150dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card02"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="150dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card01"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card03"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="150dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card02"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card04"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="150dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card03"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card05"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card01"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card06"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card05"
+        app:layout_constraintTop_toBottomOf="@+id/card02"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card07"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card06"
+        app:layout_constraintTop_toBottomOf="@+id/card03"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card08"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card07"
+        app:layout_constraintTop_toBottomOf="@+id/card04"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card09"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card05"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card10"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card09"
+        app:layout_constraintTop_toBottomOf="@+id/card06"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card11"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card10"
+        app:layout_constraintTop_toBottomOf="@+id/card07"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card12"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card11"
+        app:layout_constraintTop_toBottomOf="@+id/card08"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card13"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card09"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card14"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card13"
+        app:layout_constraintTop_toBottomOf="@+id/card10"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card15"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card14"
+        app:layout_constraintTop_toBottomOf="@+id/card11"
+        app:srcCompat="@drawable/pexeso" />
+
+    <ImageView
+        android:id="@+id/card16"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onButton"
+        app:layout_constraintStart_toEndOf="@+id/card15"
+        app:layout_constraintTop_toBottomOf="@+id/card12"
+        app:srcCompat="@drawable/pexeso" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
