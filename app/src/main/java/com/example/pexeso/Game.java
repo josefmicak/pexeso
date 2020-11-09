@@ -1,6 +1,7 @@
 package com.example.pexeso;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -8,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
@@ -20,19 +23,13 @@ public class Game extends AppCompatActivity {
 
     ImageView card01, card02, card03, card04, card05, card06, card07, card08, card09, card10, card11, card12, card13, card14, card15, card16;
     ImageView[] IVArray = {card01, card02, card03, card04, card05, card06, card07, card08, card09, card10, card11, card12, card13, card14, card15, card16};
-    int picture1 = R.drawable.antelope;
-    int picture2 = R.drawable.chimpanzee;
-    int picture3 = R.drawable.elephant;
-    int picture4 = R.drawable.giraffe;
-    int picture5 = R.drawable.hippopotamus;
-    int picture6 = R.drawable.lion;
-    int picture7 = R.drawable.rhino;
-    int picture8 = R.drawable.zebra;
-    int picturePexeso = R.drawable.pexeso;
+    Boolean[] isFlipped = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+    TextView remainingText, movesText;
     List<Integer> values = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8);
 
     private int firstCardId = 0, secondCardId = 0;
     private int firstClickedCardId = 0, secondClickedCardId = 0;
+    private int remaining = 16, moves = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,31 +54,60 @@ public class Game extends AppCompatActivity {
         IVArray[15] = findViewById(R.id.card16);
 
         Collections.shuffle(values);
+
+        remainingText = findViewById(R.id.remainingTV);
+        remainingText.setText("Remaining: " + remaining);
+        movesText = findViewById(R.id.movesTV);
+        movesText.setText("Moves: " + moves);
     }
 
     public void onButton(View card) throws InterruptedException {
-        CharSequence text;
-        text = String.valueOf(card);
+        String text = String.valueOf(card);
         String id = ((String) text).substring(text.length() - 3, text.length() - 1);
         int clickedCardId = Integer.valueOf(id);
         int cardId = setPicture(clickedCardId);
         if(firstCardId != 0 && secondCardId == 0)
         {
-            if(clickedCardId != firstClickedCardId)
+            if(clickedCardId != firstClickedCardId && !isFlipped[clickedCardId - 1])
             {
                 secondCardId = cardId;
                 secondClickedCardId = clickedCardId;
+
+                moves++;
+                movesText = findViewById(R.id.movesTV);
+                movesText.setText("Moves: " + moves);
             }
         }
-        if(firstCardId == 0)
+        if(firstCardId == 0 && !isFlipped[clickedCardId - 1])
         {
             firstCardId = cardId;
             firstClickedCardId = clickedCardId;
+
+            moves++;
+            movesText = findViewById(R.id.movesTV);
+            movesText.setText("Moves: " + moves);
         }
         if(firstCardId != 0 && secondCardId != 0)
         {
+            if(firstCardId == secondCardId)
+            {
+                remaining = remaining - 2;
+                remainingText = findViewById(R.id.remainingTV);
+                remainingText.setText("Remaining: " + remaining);
+                isFlipped[firstClickedCardId - 1] = true;
+                isFlipped[secondClickedCardId - 1] = true;
 
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                if(remaining == 0)
+                {
+                    endGame();
+                }
+            }
+            for(int i = 0; i < IVArray.length; i++)
+            {
+                IVArray[i].setClickable(false);
+            }
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if(firstCardId != secondCardId)
@@ -94,6 +120,10 @@ public class Game extends AppCompatActivity {
                     secondCardId = 0;
                     firstClickedCardId = 0;
                     secondClickedCardId = 0;
+                    for(int i = 0; i < IVArray.length; i++)
+                    {
+                        IVArray[i].setClickable(true);
+                    }
                 }
             }, 1000);
         }
@@ -129,5 +159,23 @@ public class Game extends AppCompatActivity {
                 return 8;
         }
         return 0;
+    }
+
+    public void endGame()
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Congratulations, you win!\nNumber of moves: " + moves);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Return to main menu",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
