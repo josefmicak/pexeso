@@ -20,10 +20,21 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onHighScoresButton(View view)
+    {
+        Intent intent = new Intent(this, MainHighScores.class);
+        startActivity(intent);
+    }
+
     public void onAboutButton(View view)
     {
         Intent intent = new Intent(this, About.class);
         startActivity(intent);
+    }
+
+    public void onExitButton(View view)
+    {
+        System.exit(1);
     }
 
 }
