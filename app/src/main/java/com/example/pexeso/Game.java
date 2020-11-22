@@ -1,17 +1,14 @@
 package com.example.pexeso;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +21,7 @@ import java.util.List;
 
 public class Game extends AppCompatActivity {
 
-    ImageView card01, card02, card03, card04, card05, card06, card07, card08, card09, card10, card11, card12, card13, card14, card15, card16;
+    ImageView card01, card02, card03, card04, card05, card06, card07, card08, card09, card10, card11, card12, card13, card14, card15, card16, soundImage;
     ImageView[] IVArray = {card01, card02, card03, card04, card05, card06, card07, card08, card09, card10, card11, card12, card13, card14, card15, card16};
     Boolean[] isFlipped = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     TextView remainingText, movesText;
@@ -34,6 +31,8 @@ public class Game extends AppCompatActivity {
     private int firstClickedCardId = 0, secondClickedCardId = 0;
     private int remaining = 16, moves = 0;
     private List<Integer> bestResults = new ArrayList<Integer>();
+    private Boolean soundEnabled = true;
+    MediaPlayer clickSound, successSound, failSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,7 @@ public class Game extends AppCompatActivity {
         IVArray[13] = findViewById(R.id.card14);
         IVArray[14] = findViewById(R.id.card15);
         IVArray[15] = findViewById(R.id.card16);
+        soundImage = findViewById(R.id.soundButton);
 
         Collections.shuffle(values);
 
@@ -64,6 +64,10 @@ public class Game extends AppCompatActivity {
         remainingText.setText("Remaining: " + remaining);
         movesText = findViewById(R.id.movesTV);
         movesText.setText("Moves: " + moves);
+
+        clickSound = MediaPlayer.create(this, R.raw.click);
+        successSound = MediaPlayer.create(this, R.raw.success);
+        failSound = MediaPlayer.create(this, R.raw.fail);
     }
 
     public void loadScores()
@@ -102,6 +106,7 @@ public class Game extends AppCompatActivity {
         int cardId = setPicture(clickedCardId);
         if (firstCardId != 0 && secondCardId == 0) {
             if (clickedCardId != firstClickedCardId && !isFlipped[clickedCardId - 1]) {
+                playSound(1);
                 secondCardId = cardId;
                 secondClickedCardId = clickedCardId;
 
@@ -111,6 +116,7 @@ public class Game extends AppCompatActivity {
             }
         }
         if (firstCardId == 0 && !isFlipped[clickedCardId - 1]) {
+            playSound(1);
             firstCardId = cardId;
             firstClickedCardId = clickedCardId;
 
@@ -125,6 +131,7 @@ public class Game extends AppCompatActivity {
                 remainingText.setText("Remaining: " + remaining);
                 isFlipped[firstClickedCardId - 1] = true;
                 isFlipped[secondClickedCardId - 1] = true;
+                playSound(2);
 
                 if (remaining == 0) {
                     endGame();
@@ -140,6 +147,7 @@ public class Game extends AppCompatActivity {
                     if (firstCardId != secondCardId) {
                         IVArray[firstClickedCardId - 1].setImageResource(R.drawable.pexeso);
                         IVArray[secondClickedCardId - 1].setImageResource(R.drawable.pexeso);
+                        playSound(3);
                     }
 
                     firstCardId = 0;
@@ -208,14 +216,6 @@ public class Game extends AppCompatActivity {
         {
             bestResults.add(10000);
         }
-   /*     for(int i = 0; i < bestResults.size(); i++)
-        {
-            if(moves < bestResults.get(i))
-            {
-                bestResults.add(i, moves);
-                break;
-            }
-        }*/
         bestResults.add(moves);
         bestResults.sort(Comparator.<Integer>naturalOrder());
 
@@ -229,5 +229,37 @@ public class Game extends AppCompatActivity {
             bestResults.remove(5);
         }
         saveScores();
+    }
+
+    public void playSound(int soundId)
+    {
+        if(soundEnabled)
+        {
+            switch (soundId)
+            {
+                case 1:
+                    clickSound.start();
+                    break;
+                case 2:
+                    successSound.start();
+                    break;
+                case 3:
+                    failSound.start();
+                    break;
+            }
+        }
+    }
+
+    public void toggleSound(View v)
+    {
+        soundEnabled = !soundEnabled;
+        if(soundEnabled)
+        {
+            soundImage.setImageResource(R.drawable.soundon);
+        }
+        else
+        {
+            soundImage.setImageResource(R.drawable.soundoff);
+        }
     }
 }
