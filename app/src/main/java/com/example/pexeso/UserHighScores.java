@@ -34,7 +34,7 @@ public class UserHighScores extends Fragment {
         String[] splitString = moveAmounts.split(";");
         for(int i = 0; i < splitString.length; i++)
         {
-            if(splitString[i] == null || splitString[i] == "")
+            if(splitString[i] == null)
             {
                 break;
             }
