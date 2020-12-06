@@ -55,7 +55,7 @@ public class GlobalHighScores extends Fragment {
                     for(String line : splitByNewLine)
                     {
                         String[] splitBySemicolon = line.split(";");
-                        GlobalHighScore globalHighScore = new GlobalHighScore(Integer.valueOf(splitBySemicolon[0]), splitBySemicolon[1]);
+                        GlobalHighScore globalHighScore = new GlobalHighScore(Integer.valueOf(splitBySemicolon[0]), splitBySemicolon[1], splitBySemicolon[2]);
                         bestGlobalScores.add(globalHighScore);
                     }
                 }

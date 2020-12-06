@@ -17,7 +17,7 @@ import java.util.List;
 public class UserHighScores extends Fragment {
 
     ListView listView;
-    List<String> bestUserResults = new ArrayList<>();
+    List<UserHighScore> bestUserScores = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -29,7 +29,7 @@ public class UserHighScores extends Fragment {
 
     public void loadBestUserResults()
     {
-        SharedPreferences sh = this.getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+       /* SharedPreferences sh = this.getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String moveAmounts = sh.getString("moveCounter", "");
         String[] splitString = moveAmounts.split(";");
         for(int i = 0; i < splitString.length; i++)
@@ -39,9 +39,11 @@ public class UserHighScores extends Fragment {
                 break;
             }
             bestUserResults.add(i, String.valueOf(i + 1) + ". " + splitString[i] + " moves");
-        }
+        }*/
+        DatabaseHandler db = new DatabaseHandler(getActivity());
+        bestUserScores = db.getAllScores();
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_expandable_list_item_1, bestUserResults);
+        ArrayAdapter<UserHighScore> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_expandable_list_item_1, bestUserScores);
         listView.setAdapter(arrayAdapter);
     }
 }

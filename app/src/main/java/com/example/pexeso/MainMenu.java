@@ -26,6 +26,13 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onSettingsButton(View view)
+    {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
+
+
     public void onAboutButton(View view)
     {
         Intent intent = new Intent(this, About.class);

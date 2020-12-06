@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
-        android:layout_marginTop="284dp"
+        android:layout_marginTop="212dp"
         android:onClick="onNewGameButton"
         android:text="New game"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +43,21 @@
         android:id="@+id/aboutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
+        android:layout_marginStart="176dp"
         android:layout_marginTop="40dp"
         android:onClick="onAboutButton"
         android:text="About"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsButton" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="40dp"
+        android:onClick="onSettingsButton"
+        android:text="Settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highScoresButton" />
 
