@@ -2,49 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainMenu">
 
     <Button
         android:id="@+id/newGameButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="212dp"
+        android:layout_width="91dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="392dp"
+        android:background="#FFFFFF"
         android:onClick="onNewGameButton"
         android:text="New game"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/highScoresButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="40dp"
-        android:onClick="onHighScoresButton"
-        android:text="High Scores"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newGameButton" />
-
-    <Button
-        android:id="@+id/exitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="40dp"
-        android:onClick="onExitButton"
-        android:text="Exit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutButton" />
-
-    <Button
         android:id="@+id/aboutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="182dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
         android:onClick="onAboutButton"
         android:text="About"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,13 +33,48 @@
 
     <Button
         android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="36dp"
+        android:background="#FFFFFF"
         android:onClick="onSettingsButton"
         android:text="Settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highScoresButton" />
+
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="182dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:onClick="onExitButton"
+        android:text="Exit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutButton" />
+
+    <Button
+        android:id="@+id/highScoresButton"
+        android:layout_width="106dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:onClick="onHighScoresButton"
+        android:text="High Scores"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newGameButton" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pexesomenu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

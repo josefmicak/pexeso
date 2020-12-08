@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,8 +18,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.MotionEventCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -82,6 +85,7 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         db = new DatabaseHandler(this);
         setContentView(R.layout.game);
+        setTheme();
         loadUserScore();
         try {
             loadGlobalScore();
@@ -112,9 +116,9 @@ public class Game extends AppCompatActivity {
 
         Collections.shuffle(values);
 
-        remainingText = findViewById(R.id.remainingTV);
+        remainingText = findViewById(R.id.remainingText);
         remainingText.setText("Remaining: " + remaining);
-        movesText = findViewById(R.id.movesTV);
+        movesText = findViewById(R.id.movesText);
         movesText.setText("Moves: " + moves);
 
         clickSound = MediaPlayer.create(this, R.raw.click);
@@ -125,12 +129,25 @@ public class Game extends AppCompatActivity {
         getLastLocation();
     }
 
+    public void setTheme()
+    {
+        int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.BLACK, Color.GRAY, Color.rgb(139, 69, 19), Color.MAGENTA};
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        constraintLayout.setBackgroundColor(colors[sharedPreferences.getInt("themeColor", 0)]);
+
+        TextView movesText = findViewById(R.id.movesText);
+        movesText.setTextColor(colors[sharedPreferences.getInt("themeColor", 0)]);
+        TextView remainingText = findViewById(R.id.remainingText);
+        remainingText.setTextColor(colors[sharedPreferences.getInt("themeColor", 0)]);
+    }
 
     public void onButton(View card) throws InterruptedException, IOException {
         String text = String.valueOf(card);
         String id = ((String) text).substring(text.length() - 3, text.length() - 1);
         int clickedCardId = Integer.valueOf(id);
         int cardId = setPicture(clickedCardId);
+        Log.d("ese", "cardId = " + cardId);
         if (firstCardId != 0 && secondCardId == 0) {
             if (clickedCardId != firstClickedCardId && !isFlipped[clickedCardId - 1]) {
                 playSound(1);
@@ -138,7 +155,7 @@ public class Game extends AppCompatActivity {
                 secondClickedCardId = clickedCardId;
 
                 moves++;
-                movesText = findViewById(R.id.movesTV);
+                movesText = findViewById(R.id.movesText);
                 movesText.setText("Moves: " + moves);
             }
         }
@@ -148,13 +165,13 @@ public class Game extends AppCompatActivity {
             firstClickedCardId = clickedCardId;
 
             moves++;
-            movesText = findViewById(R.id.movesTV);
+            movesText = findViewById(R.id.movesText);
             movesText.setText("Moves: " + moves);
         }
         if (firstCardId != 0 && secondCardId != 0) {
             if (firstCardId == secondCardId) {
                 remaining = remaining - 2;
-                remainingText = findViewById(R.id.remainingTV);
+                remainingText = findViewById(R.id.remainingText);
                 remainingText.setText("Remaining: " + remaining);
                 isFlipped[firstClickedCardId - 1] = true;
                 isFlipped[secondClickedCardId - 1] = true;
@@ -191,7 +208,7 @@ public class Game extends AppCompatActivity {
 
     public int setPicture(int clickedCardId) {
         int[] pictureArray;
-        if(pictureSet == "Animals")
+        if(pictureSet.equals("Animals"))
         {
             pictureArray = new int[]{R.drawable.antelope, R.drawable.antelope, R.drawable.chimpanzee, R.drawable.elephant, R.drawable.giraffe, R.drawable.hippopotamus, R.drawable.lion, R.drawable.rhino, R.drawable.zebra};
         }
@@ -217,7 +234,7 @@ public class Game extends AppCompatActivity {
         }
         else if(addedUserScore && !addedGlobalScore)
         {
-            message = "Congratulations, you win!\nNumber of moves: " + moves + "\nYour result is good enough to be added to both your personal scores! You may check them out in the Score section of the main menu\nPlease enter your name:";
+            message = "Congratulations, you win!\nNumber of moves: " + moves + "\nYour result is good enough to be added to your personal scores! You may check them out in the Score section of the main menu\nPlease enter your name:";
         }
         else if(!addedUserScore && addedGlobalScore)
         {
@@ -244,6 +261,10 @@ public class Game extends AppCompatActivity {
                         {
                             GlobalHighScore globalHighScore = bestGlobalScores.get(addedGlobalScoreId);
                             globalHighScore.setName(userName);
+                        }
+                        for(int i = 0; i < bestUserScores.size(); i++)
+                        {
+                            UserHighScore userHighScore2 = bestUserScores.get(i);
                         }
                         if(addedUserScore)
                         {
@@ -295,7 +316,6 @@ public class Game extends AppCompatActivity {
         }
     }
 
-
     public void loadGlobalScore() throws IOException {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -321,7 +341,6 @@ public class Game extends AppCompatActivity {
                         GlobalHighScore globalHighScore = new GlobalHighScore(Integer.valueOf(splitBySemicolon[0]), splitBySemicolon[1], splitBySemicolon[2]);
                         bestGlobalScores.add(globalHighScore);
                     }
-
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -349,7 +368,7 @@ public class Game extends AppCompatActivity {
         }
         if(addedGlobalScore)
         {
-       //     saveGlobalScore();
+            saveGlobalScore();
         }
     }
 
@@ -404,6 +423,43 @@ public class Game extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        onEndGameDialog();
+    }
+
+    public void onEndGameButton(View view)
+    {
+        onEndGameDialog();
+    }
+
+    public void onEndGameDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("End game");
+        String message = "The game will close and your progress will be lost. Do you want to continue?";
+        builder.setMessage(message);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
+    }
 
     @SuppressLint("MissingPermission")
     private void getLastLocation()
@@ -473,7 +529,7 @@ public class Game extends AppCompatActivity {
         {
             countryName=addresses.get(0).getCountryName();
         }
-        if(countryName == "" || countryName == null)
+        if(countryName.equals("") || countryName == null)
         {
             countryName = "Unknown";
         }
