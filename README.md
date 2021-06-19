@@ -15,3 +15,5 @@ TAMZ II - obsažené funkce
 - Geo Location - zjištění uživatelovy zeměpisné lokace na úrovní státu za účelem případného zpracování jeho skóre
 - Persistent Storage - ukládání vybraného uživatelova vzhledu aplikace a sady obrázků používaných během hry do SharedPreferences
 - Networking - práce s nejlepšími výsledky všech hráčů, čtení a úprava souboru uloženého na externím serveru pomocí PHP
+
+![Graphical overview of the game](./Images/Pexeso.png)
